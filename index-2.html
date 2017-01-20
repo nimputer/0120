@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- 最新編譯和最佳化的 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!-- 選擇性佈景主題 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+    <!-- 最新編譯和最佳化的 JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function(){
+            $.ajax({
+                url:"http://api.openweathermap.org/data/2.5/forecast/daily?q=Taipei,tw&units=metric&cnt=14&appid=b1ecbccd638b763d489602917ba47cc3",
+                dataType:"json",
+                success:function(e){
+                    $(".container").append(e.city.name);
+                    $(e.list).each(function(){
+                        
+                        var myDate = new Date(this.dt*1000);
+                        console.log(myDate);
+                        var year = myDate.getFullYear();
+                        var month = myDate.getMonth()+1;
+                        var __date = myDate.getDate();
+                        var day = myDate.getDay();
+//                        if(day==0){
+//                            day="日"
+//                        }
+                        var DAY = ["日","一","二","三","四","五","六"];
+                        var c = "<div class='date'>日期："+year+"年"+month+"月"+__date+"日 星期"+DAY[day]+"</div>"
+                        c += "<div class='temp'>今日溫度："+parseInt
+                        (this.temp.day)+"</div>"
+                        c += "<div class='weather'>今日天氣："+this.weather[0].description+"</div>"
+//                        c += "<div class='icon'><img src='http://openweathermap.org/img/w/"+this.weather[0].icon+".png'></div><hr>"                     
+                          c += "<div class='icon'><img src='images/10d.png'></div>"
+                        
+                        $(".container").append(c);
+
+                        
+                    });
+                },
+                error:function(){
+                    console.log("ERROR");
+                }
+                   
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="container">
+
+    </div>
+</body>
+</html>
